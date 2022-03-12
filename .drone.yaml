@@ -1,0 +1,38 @@
+kind: pipeline
+type: docker
+name: ihateyourvoicemessages
+
+steps:
+- name: lint
+  image: golangci/golangci-lint:v1.44.2-alpine
+  commands:
+    - golangci-lint run ./...
+- name: build
+  image: demacr/docker:dind
+  environment:
+    DOCKERHUB_TOKEN:
+      from_secret: DOCKERHUB_TOKEN
+  volumes:
+  - name: dockersock
+    path: /var/run
+  commands:
+  - sleep 5 # give docker enough time to start
+  - docker login -u demacr -p $DOCKERHUB_TOKEN
+  - docker build -t demacr/ihateyourvoicemessages:latest
+  - docker push demacr/ihateyourvoicemessages:latest
+
+services:
+- name: docker
+  image: docker:dind
+  privileged: true
+  volumes:
+  - name: dockersock
+    path: /var/run
+
+volumes:
+- name: dockersock
+  temp: {}
+
+trigger:
+  branch:
+  - master
