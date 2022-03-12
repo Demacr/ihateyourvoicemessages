@@ -8,7 +8,7 @@ steps:
   commands:
     - golangci-lint run ./...
 - name: build
-  image: demacr/docker:dind
+  image: docker:dind
   environment:
     DOCKERHUB_TOKEN:
       from_secret: DOCKERHUB_TOKEN
