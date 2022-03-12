@@ -18,7 +18,7 @@ steps:
   commands:
   - sleep 5 # give docker enough time to start
   - docker login -u demacr -p $DOCKERHUB_TOKEN
-  - docker build -t demacr/ihateyourvoicemessages:latest
+  - docker build -t demacr/ihateyourvoicemessages:latest .
   - docker push demacr/ihateyourvoicemessages:latest
 
 services:
