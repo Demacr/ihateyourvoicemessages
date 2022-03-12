@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -105,7 +104,7 @@ func SpeechToText(file []byte) (string, error) {
 	// }
 
 	// Prints billed time.
-	fmt.Println("Billed time:", resp.TotalBilledTime)
+	log.Println("Billed time:", resp.TotalBilledTime)
 
 	textResult := strings.Builder{}
 	for _, result := range resp.Results {
